@@ -1,0 +1,130 @@
+{
+ "pack_version": "2026.10.1",
+ "min_app": "1.4.0",
+ "released": "2026-10-05",
+ "notes": "Adds a trap bar, a hip abduction machine and 6 exercise options for more variety when the plateau engine swaps lifts. No coaching numbers or safety rules change.",
+ "equipment": [
+  [
+   "trap_bar",
+   "Trap (hex) bar"
+  ],
+  [
+   "hip_abduction_machine",
+   "Hip abduction machine"
+  ]
+ ],
+ "exercises": {
+  "trap_bar_deadlift": {
+   "n": "Trap bar deadlift",
+   "slot": "hinge",
+   "eq": [
+    "barbell_rack",
+    "trap_bar"
+   ],
+   "r": [
+    4,
+    8
+   ],
+   "lc": "large",
+   "inc": 2.5,
+   "fat": 3,
+   "cx": 2
+  },
+  "incline_db_press": {
+   "n": "Incline dumbbell press",
+   "slot": "hpush",
+   "eq": [
+    "dumbbells",
+    "bench"
+   ],
+   "r": [
+    8,
+    12
+   ],
+   "lc": "small",
+   "inc": 2,
+   "fat": 2,
+   "cx": 2
+  },
+  "single_arm_cable_row": {
+   "n": "Single-arm cable row",
+   "slot": "hpull",
+   "eq": [
+    "cable"
+   ],
+   "r": [
+    8,
+    12
+   ],
+   "lc": "small",
+   "inc": 2.5,
+   "fat": 2,
+   "cx": 2
+  },
+  "reverse_lunge_db": {
+   "n": "Dumbbell reverse lunge",
+   "slot": "lunge",
+   "eq": [
+    "dumbbells"
+   ],
+   "r": [
+    8,
+    12
+   ],
+   "lc": "small",
+   "inc": 2,
+   "fat": 2,
+   "cx": 3
+  },
+  "hip_abduction": {
+   "n": "Hip abduction machine",
+   "slot": "acc2",
+   "eq": [
+    "hip_abduction_machine"
+   ],
+   "r": [
+    10,
+    15
+   ],
+   "lc": "small",
+   "inc": 2.5,
+   "fat": 1,
+   "cx": 1
+  },
+  "seated_db_curl": {
+   "n": "Seated dumbbell curl",
+   "slot": "acc2",
+   "eq": [
+    "dumbbells",
+    "bench"
+   ],
+   "r": [
+    8,
+    12
+   ],
+   "lc": "small",
+   "inc": 1,
+   "fat": 1,
+   "cx": 1
+  }
+ },
+ "constants": {},
+ "rules_review": {
+  "MESO-001": {
+   "reviewed": "2026-10-05",
+   "source": "Developer review; heuristic, no new evidence checked",
+   "note": "Unchanged"
+  },
+  "PLAT-001": {
+   "reviewed": "2026-10-05",
+   "source": "Developer review; evidence for plateau thresholds is weak (E3/H1)",
+   "note": "New in 1.4.0"
+  },
+  "ENDU-001": {
+   "reviewed": "2026-10-05",
+   "source": "Developer review; interval structure is a practical default (H1)",
+   "note": "New in 1.4.0"
+  }
+ },
+ "checksum": "c99329cb"
+}
