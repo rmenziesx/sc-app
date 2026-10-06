@@ -1,0 +1,1 @@
+{ "name": "sc-app-tests", "private": true, "description": "Run from the repo folder: npm install --prefix tests, then node tests/run-all.js", "dependencies": { "jsdom": "^24.0.0" } }
