@@ -37,6 +37,13 @@ test('live build has no banner', () => ok(!r.w.document.getElementById('bar').te
 test('live build creates no demo data', () => eq(r.ev('db.profiles.length'), 0));
 test('live build has no demo profile definitions', () => eq(r.ev(`Object.keys(SYN).filter(k=>k.startsWith('demo_'))`), []));
 test('live build Home Screen name is S&C', () => ok(fs.readFileSync(releaseFile, 'utf8').includes('content="S&C"')));
+test('live build never shows start-now test buttons', () => {
+  const r2 = load(releaseFile, { storage: { 'scapp.v1': s.w.localStorage.getItem('scapp.staging.v1') } });
+  const id = r2.ev(`db.profiles.find(p=>p.synthetic_key==='lindsey').id`); r2.ev(`A.sw('${id}',1);V={s:'prog'};render()`);
+  ok(!r2.html().includes('test build')); r2.ev(`V={s:'home'};render()`); ok(!r2.html().includes('test build'));
+  const n = r2.ev(`repo.list('workouts','${id}').filter(w=>w.status==='scheduled').length`); const wid = r2.ev(`repo.list('workouts','${id}').find(w=>w.status==='scheduled'&&w.date>today()).id`);
+  r2.ev(`A.practice('${wid}')`); ok(r2.ev(`repo.get('workouts','${wid}','${id}').date`) !== r2.ev('today()'), 'live build moved a session');
+});
 test('live build hides test tools when there are no test profiles', () => { r.ev(`V={s:'prof'};render()`); ok(!r.html().includes('Demo data (test build)') && !r.html().includes('Create missing demo')); });
 test('release differs from the approved test build in exactly 3 places', () => {
   const a = fs.readFileSync(stagingFile, 'utf8').split('\n'), b = fs.readFileSync(releaseFile, 'utf8').split('\n');
@@ -58,7 +65,12 @@ if (oldLive) {
   test('upgrade: old exclusion converted and flagged for review', () => {
     const p = u.ev(`db.profiles[1].training_prefs`); ok(p.needs_review); ok(p.items.some(i => /curl/.test(u.ev(`EXL['${i.target}'].n.toLowerCase()`))));
   });
-  test('upgrade: male profile keeps training', () => { const id = u.ev(`db.profiles[0].id`); u.ev(`Coach.day('${id}',true)`); eq(u.ev(`coachOf('${id}').programme_blocked`), null); });
+  test('upgrade: male profile asked to confirm equipment once (EQ-001)', () => { const id = u.ev(`db.profiles[0].id`); u.ev(`Coach.day('${id}',true)`); eq(u.ev(`coachOf('${id}').programme_blocked`), 'EQUIP_CHECK'); });
+  test('upgrade: confirming equipment resumes the same programme', () => {
+    const id = u.ev(`db.profiles[0].id`), pr0 = u.ev(`repo.list('programmes','${id}')[0].id`);
+    u.ev(`A.sw('${id}',1);V={s:'eq'};render();A.eqOk()`);
+    eq(u.ev(`coachOf('${id}').programme_blocked`), null); eq(u.ev(`repo.list('programmes','${id}').find(x=>x.status==='active').id`), pr0);
+  });
   test('upgrade: female profile asked the new questions before her next programme', () => { const id = u.ev(`db.profiles[1].id`); u.ev(`Coach.day('${id}',true)`); eq(u.ev(`coachOf('${id}').programme_blocked`), 'HEALTH_INCOMPLETE'); });
   test('upgrade: past workouts are not changed', () => {
     const ids = before.workouts.filter(w => w.status === 'completed').map(w => w.id);

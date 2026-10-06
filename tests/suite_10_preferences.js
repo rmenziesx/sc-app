@@ -132,9 +132,8 @@ test('new profile goes to preferences first', () => {
 test('baseline cannot start before preferences are saved', () => {
   ev(`V={s:'home'};A.start()`); eq(ev('V.s'), 'tp'); eq(ev('V.next'), 'as');
 });
-test('saving preferences continues into the baseline', () => {
-  ev('A.tpSave()'); ok(ev('!!curA()'), 'no assessment started'); eq(ev('V.s'), 'as');
-});
+test('saving preferences goes to the equipment check next', () => { ev('A.tpSave()'); eq(ev('V.s'), 'eq'); eq(ev('V.next'), 'as'); });
+test('confirming equipment continues into the baseline', () => { ev(`A.eqTog('dumbbells');A.eqOk()`); ok(ev('!!curA()'), 'no assessment started'); eq(ev('V.s'), 'as'); });
 
 // ---- swaps (PREF-007 / PREF-008) ----
 const sid = mkProfile(ev, { name: 'Sw1', equip: ['dumbbells', 'bench', 'cable', 'kettlebell'] }, []);

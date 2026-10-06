@@ -14,4 +14,9 @@ Workflow: change staging → run tests → upload staging → Ross checks with d
 - Migration MIG-150: old free-text exclusions converted (same matches as before) and flagged for review; profiles not recorded as male answer the new questions before their next programme.
 - Test build environment, demo profiles with "What to check" notes, reset.
 - Unchanged: programmes and 4-month simulations for Ross Test, Lindsey Test and Beginner Test are identical to 1.4.0.
-- Tests: 121 (suite 0 baseline 24, suite 9 pregnancy 39, suite 10 preferences 37, suite 11 environments/upgrade 21).
+- CP-008 Empty slots (GEN-004/005): related-slot fill (lunge<->squat, chest<->overhead press, rows<->pulldowns), otherwise the slot is left empty and the app says so and names equipment that would fill it. Lower days use lower-body accessories only. Added barbell split squat, barbell bent-over row, dumbbell floor press (fallback only) and dumbbell calf raise.
+- CP-009 Equipment check (EQ-001/002): equipment confirmed on a preview screen before any programme is written and after any equipment change; each new block waits for re-confirmation while the current block continues. Today's session lists the equipment it uses.
+- Test build only (TEST-001): "Start this session now" on Programme days and rest days; every demo profile has a session today; Mid-workout demo; demo profiles can be switched mid-workout.
+- Note: adding exercises changes some rotations for existing profiles from the next programme they generate.
+- CP-010 Time-budgeted sessions (SESS-001..004): every session is sized to the profile's preferred minutes (±5). Short: add region-matched accessories, then accessory sets, then an easy cardio finisher (cardio-type goals only). Long: drop/trim accessories. Main-lift sets are never added or cut for time. Any session outside the band shows its reason. Estimates self-calibrate after 4 timed sessions. Finisher screen after the last set, logged as cardio minutes; a warning symptom pauses training.
+- Tests: 163 (suite 0 baseline 24, 9 pregnancy 39, 10 preferences 38, 11 environments/upgrade 23, 12 equipment 21, 13 session time 18).

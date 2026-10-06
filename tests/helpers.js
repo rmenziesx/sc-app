@@ -10,7 +10,7 @@ function mkProfile(ev, over, prefsItems, preg) {
       sport_return:{enabled:!!sp.sport,sport:'recreational 5-a-side'},synthetic:false};
     ${preg === undefined ? "p.preg_screen=p.sex==='male'?undefined:{preg:'no',birth:'no',pelvic:{},answered_at:today(),v:1};" : preg === null ? '' : `p.preg_screen=Object.assign({pelvic:{}},${JSON.stringify(preg)},{answered_at:today(),v:1});`}
     ${prefsItems === null ? '' : `p.training_prefs={v:1,items:${JSON.stringify(prefsItems || [])}.map(i=>Object.assign({reason:'dislike',note:'',created_at:now()},i)),confirmed_at:now(),history:[]};`}
-    db.profiles.push(p);synthBaseline(p.id,sp);Coach.day(p.id,true);return p.id})()`);
+    if(!sp.noEqConfirm)p.equipment_confirmed={at:today(),sig:eqSig(p)};db.profiles.push(p);synthBaseline(p.id,sp);Coach.day(p.id,true);return p.id})()`);
 }
 const weekTypes = (ev, id) => ev(`(()=>{const pr=repo.list('programmes','${id}').find(x=>x.status==='active');if(!pr)return null;const v=repo.list('progver','${id}').find(x=>x.id===pr.current_version_id);return v.week.map(s=>s.type)})()`);
 const weekEx = (ev, id) => ev(`(()=>{const pr=repo.list('programmes','${id}').find(x=>x.status==='active');if(!pr)return null;const v=repo.list('progver','${id}').find(x=>x.id===pr.current_version_id);return v.week.flatMap(s=>(s.exercises||[]).map(e=>e.ex))})()`);
